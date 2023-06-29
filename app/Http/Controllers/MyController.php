@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MyController extends Controller
@@ -24,6 +25,7 @@ class MyController extends Controller
     public function storefilm(MovieRequest $request) {
 
         Movie::create([
+            'user_id'=> Auth::user()->id,
             'name'=>$request->input('name'),
             'director'=>$request->input('director'),
             'year'=>$request->input('year'),
@@ -35,9 +37,9 @@ class MyController extends Controller
     }
 
 
-    public function show(Movie $movie){
+    public function show(Movie $film){
 
-        return view('movieshow', ['movie'=> $movie]);
+        return view('movieshow', ['movie'=> $film]);
     }
 
 

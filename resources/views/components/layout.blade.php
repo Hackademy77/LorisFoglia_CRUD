@@ -19,14 +19,39 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
         </li>
+        @if(Auth::user() != null)
         <li class="nav-item">
           <a class="nav-link" href="{{route('movie.add')}}">Aggiungi film</a>
         </li>
-      </ul>
-      <form class="d-flex" role="search">
+        @endif
+        <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+        </form>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        @if(Auth::user() != null)
+        <li class="nav-item">
+          <p class="nav-link">{{Auth::user()->name}}</p>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{route('utente')}}">Il mio profilo</a>
+        </li>
+        <li class="nav-item">
+          <form action="{{route('logout')}}" method="post" class="nav-link">
+          @csrf
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+        @else
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{route('register')}}">Registrati</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{route('login')}}">Accedi</a>
+        </li>
+        @endif
+      </ul>
     </div>
   </div>
 </nav>
