@@ -5,12 +5,11 @@
 </x-slot>
 
 <div class="container">
-    <div class="row justify-content-evenly">
+    <div class="row">
         @foreach($movies as $movie)
-        <div class="col-3 mx-4">
+        <div class="col-md-3">
             <x-card 
             :movie="$movie"
-
             pageis="welcome"
             />
         </div>

@@ -6,6 +6,11 @@
     <h3 class="card-title">{{$movie->year}}</h3>
     <p class="card-text">{{Str::limit($movie->description, 80)}}</p>
     <p>film aggiunto da: <b>{{$movie->user->name}}</b></p>
+    <p>Tag: 
+       @foreach($movie->tags as $tag)
+          <span><i>{{$tag->name}}, </i></span>
+       @endforeach
+    </p>
     <div class="row justify-content-evenly">
       <div class="col-4">
         <a href="{{route('movie.show', $movie)}}" class="btn btn-sm btn-primary">Dettagli</a>

@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('movies', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->default(1);
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('movies', function (Blueprint $table) {
-            $table->dropForeign('user_id'); 
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('tags');
     }
 };

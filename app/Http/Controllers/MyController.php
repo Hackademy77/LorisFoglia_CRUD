@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Movie;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +20,17 @@ class MyController extends Controller
     
 
     public function addfilm() {
-        return view('addfilm');
+        $tags = Tag::all();
+
+        $platforms = Platform::all();
+
+        return view('addfilm', compact('tags', 'platforms'));
     }
 
 
     public function storefilm(MovieRequest $request) {
 
-        Movie::create([
+        $movie = Movie::create([
             'user_id'=> Auth::user()->id,
             'name'=>$request->input('name'),
             'director'=>$request->input('director'),
@@ -33,6 +39,10 @@ class MyController extends Controller
             'img'=>$request->file('img')->store('public/movies'),
         ]);
         
+        $movie->tags()->attach($request->input('tags'));
+
+        $movie->platforms()->attach($request->input('platforms'));
+
         return to_route('home')->with('message', "Movie aggiunto correttamente");
     }
 
@@ -44,7 +54,11 @@ class MyController extends Controller
 
 
     public function edit(Movie $movie){
-        return view('editfilm', ['movie'=> $movie]);
+
+        $tags = Tag::all();
+        $platforms = Platform::all();
+
+        return view('editfilm', compact('movie', 'tags', 'platforms'));
     }
 
 
@@ -59,6 +73,11 @@ class MyController extends Controller
             'description'=>$request->input('description'),
             'img'=>($request->file('img')==null)? $movie->img : $request->file('img')->store('public/movies'),
         ]);
+        
+        $movie->tags()->detach();
+        $movie->tags()->attach($request->input('tags'));
+        $movie->platforms()->detach();
+        $movie->platforms()->attach($request->input('platforms'));
 
         if($request->file('img')!==null){
             Storage::delete($imgOldMovie);

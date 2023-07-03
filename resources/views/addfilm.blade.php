@@ -27,6 +27,26 @@
                         <input type="text" name="year" class="form-control" id="exampleInputPassword1">
                     </div>
                     <div class="mb-3">
+                        <label for="" class="form-label">Tag</label>
+                        <select name="tags[]" class="form-select" multiple>
+                            @foreach ($tags as $tag)
+                            <option value="{{$tag->id}}">
+                                {{$tag->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Tag</label>
+                        <select name="platforms[]" class="form-select" multiple>
+                            @foreach ($platforms as $platform)
+                            <option value="{{$platform->id}}">
+                                {{$platform->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Locandina</label>
                         <input type="file" name="img" class="form-control" id="exampleInputPassword1">
                     </div>
